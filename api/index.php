@@ -1,13 +1,11 @@
 <?php
 // && $_SERVER['HTTP_REFERER']==="http://weixin.scnjnews"
-var_dump($_POST);
-var_dump(file_get_contents("php://input"));
+$datas=JSON_decode(file_get_contents("php://input"),true);
 if(!empty($_FILES['file'])  ){
-    $_FILES['file']['tmp_name']['error']!==0?null:exit(500);
+    $_FILES['file']['error']===0?null:exit(500);
     $time=date("Ymd",time());
     $dirFile=pathinfo(__FILE__);
     $preParedDir=$dirFile['dirname'].'\\'.$time;
-
     preg_match('/[^.]+$/',$_FILES['file']['name'],$result);
     $newName=uniqid().".".$result[0];
     if(!file_exists($preParedDir)){
@@ -19,14 +17,11 @@ if(!empty($_FILES['file'])  ){
         "filename"=>$preParedDir."\\".$newName
       ));
     }
-}elseif(isset($_POST['action'])) {
-  var_dump($_POST);
-  exit();
-  switch ($_POST['action']) {
+}elseif(isset($datas['action'])) {
+  switch ($datas['action']) {
     case 'unlinkFile':
-      echo unlink($_POST['filename']);
+      echo unlink($datas['filename']);
       break;
-
     default:
       # code...
       break;

@@ -6,26 +6,46 @@ Button, Upload, Icon,Input
 } from 'antd';
 import banner from '../../resource/img/a.jpg';
 import axios from 'axios';
+import {Link} from 'react-router-dom';
 const FormItem = Form.Item;
 const Option = Select.Option;
 
 const { TextArea } = Input;
 
 class Index extends React.Component {
+  state={
+    id:this.props.match.params.openid
+  }
   handleSubmit = (e) => {
     e.preventDefault();
     this.props.form.validateFields((err, values) => {
       if (!err) {
+        if(values.uploads){
+          let datas=values.uploads.map((value)=>{
+              return value.response.filename
+          })
+          values.uploads=datas;
+        }
+        axios.post("/front.php",params:{...values})
+        .then((res)=>{
+          console.log(res)
+        })
+        .catch(e=>{
+          console.log(e)
+        })
         console.log('Received values of form: ', values);
+
       }
     });
   }
   normFile = (e) => {
-
     if (Array.isArray(e)) {
       return e;
     }
     return e && e.fileList;
+  }
+  toPerson(){
+    this.props.history.push("/person/"+this.state.id);
   }
 
   render() {
@@ -40,8 +60,9 @@ class Index extends React.Component {
       multiple:true,
       action:"/index.php",
       onChange(info){
-        console.log(info)
+
       },onRemove(file){
+
           axios.post("/index.php",JSON.stringify({
             filename:file.response.filename,
             action:"unlinkFile"
@@ -101,7 +122,7 @@ class Index extends React.Component {
           label="点击上传图片或视频"
         >
           <div className="dropbox">
-            {getFieldDecorator('点击上传图片或视频', {
+            {getFieldDecorator('uploads', {
               valuePropName: 'fileList',
               getValueFromEvent: this.normFile,
             })(
@@ -121,6 +142,11 @@ class Index extends React.Component {
         >
           <Button type="primary" htmlType="submit">提交</Button>
         </FormItem>
+        <div style={styles.icons}>
+
+         <Icon type="user" style={{fontSize:30,display:"block"}} onClick={()=>this.toPerson()}/>
+         个人中心
+         </div>
       </Form>
     );
   }
@@ -129,6 +155,12 @@ const styles={
   mid:{
     maxWidth:"100%",
     overflow:"hidden",
+  },
+  icons:{
+    position: "fixed",
+    bottom: "5%",
+    right: "5%",
+    textAlign: "center"
   }
 }
 
