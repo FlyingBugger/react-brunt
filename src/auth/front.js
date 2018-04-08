@@ -15,7 +15,7 @@ export default (Layout, props,action) => {
           }
         }
       ).then((res)=>{
-          if(res.data==0){
+          if(res.data===0){
             //跳转到获取用户信息界面
               window.location.href="http://localhost/userinfo.php"
           }else{
@@ -25,6 +25,10 @@ export default (Layout, props,action) => {
           console.log(e)
         })
         break;
+        case "PersonSign":
+        //    cookie.save("token",match.params.openid);
+          break;
+
       default:
     }
 

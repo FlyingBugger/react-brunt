@@ -19,16 +19,11 @@ const fakeDataUrl = '/userinfo.php';
     document.title="个人中心"
   }
   componentDidMount() {
-    const {record }=this.props;
     this.getData((res) => {
-      const datas={
-        userid:this.state.id,
-        msg:res.data.msg
-      }
-      record(datas);
+
       this.setState({
         loading: false,
-        data: res.data.msg,
+        data: res.data,
       });
     });
   }
@@ -54,18 +49,23 @@ const fakeDataUrl = '/userinfo.php';
     });
     this.getData((res) => {
       const data = this.state.data.concat(res.results);
+
       this.setState({
         data,
         loadingMore: false,
       }, () => {
-        // Resetting window's offsetTop so as to display react-virtualized demo underfloor.
-        // In real scene, you can using public method of react-virtualized:
-        // https://stackoverflow.com/questions/46700726/how-to-use-public-method-updateposition-of-react-virtualized
         window.dispatchEvent(new Event('resize'));
       });
     });
   }
-  toDetails(){
+  toDetails(item){
+
+    const datas={
+      userid:this.state.id,
+      msg:item
+    }
+    this.props.record(datas);
+
     this.props.history.push("/msgdetails");
   }
   handleEdit(){
@@ -77,7 +77,7 @@ const fakeDataUrl = '/userinfo.php';
     const loadMore = showLoadingMore ? (
       <div style={{ textAlign: 'center', marginTop: 12, height: 32, lineHeight: '32px' }}>
         {loadingMore && <Spin />}
-        {!loadingMore && <Button onClick={this.onLoadMore}>loading more</Button>}
+        {!loadingMore && <Button onClick={this.onLoadMore}>加载更多</Button>}
       </div>
     ) : null;
     return (
@@ -90,13 +90,15 @@ const fakeDataUrl = '/userinfo.php';
         loadMore={loadMore}
         dataSource={data}
         renderItem={item => (
-          <List.Item actions={[<a onClick={()=>this.toDetails()}>详情</a>]}>
+
+          <List.Item actions={[<span style={item.status!==0?styles.red:styles.green}> {item.status!==0?"未被查看":"已被查看"}</span>,<a onClick={()=>this.toDetails(item)}>详情</a>]}>
+
             <List.Item.Meta
               title={item.title}
               style={{textAlign:"center"}}
               description=""
             />
-            <div className="contents">is refined by Ant UED Teamis refined by Ant UED Team</div>
+            <div className="contents">{item.contents}</div>
           </List.Item>
         )}
       />
@@ -125,6 +127,12 @@ const styles={
     color: "white",
     lineHeight: "53px",
     fontSize: "25px"
+  },
+  red:{
+    color:"red"
+  },
+  green:{
+    color:"green"
   }
 
 }

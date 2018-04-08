@@ -1,5 +1,6 @@
 <?php
   $datas=$_GET;
+
   $db=new PDO("mysql:host=localhost;dbname=weixin","root","root");
   if(empty($datas)){
     //do getting getUserInfo
@@ -33,8 +34,8 @@
         echo 1;
       }
   }elseif (isset($datas['id'])) {
-      $openid=$datas['token'];
-      $sql="select count(id) from bl_contents where openid='$openid'";
+      $openid=$datas['id'];
+      $sql="select * from bl_contents where openid='$openid'";
       $res=$db->query($sql);
       echo json_encode($res->fetchAll(PDO::FETCH_ASSOC));
   }

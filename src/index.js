@@ -22,7 +22,7 @@ ReactDOM.render(
         <Router >
           <Switch>
                <Route exact path="/index/:openid" component={props => requireAuth(FrontIndex, props,"IndexSign")}/>
-               <Route exact path="/person/:id"  component={props => requireAuth(PersonCenter, props,"PersonCenter")} />
+               <Route exact path="/person/:id"  component={props => requireAuth(PersonCenter, props,"PersonSign")} />
                <Route path="/msgdetails"  component={MsgDetails}/>
                <Route  path="/admin/login" component={Login}/>
                <Route  path="/" component={getUserInfo}/>

@@ -6,3 +6,15 @@
     -webkit-line-clamp: 3;
     overflow: hidden;
   }
+  .ant-list-item-meta-title{
+    max-width: 94%;
+    display: -webkit-box;
+    /* autoprefixer: off */
+    -webkit-box-orient: vertical;
+    /* autoprefixer: on */
+    -webkit-line-clamp: 2;
+    overflow: hidden;
+  }
+.ant-list-item-action{
+  margin-left: unset !important;
+}

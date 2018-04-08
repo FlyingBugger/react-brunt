@@ -1,7 +1,7 @@
 import React from 'react';
 
 import {
-  Form, Select, InputNumber, Radio,
+  Form, Select, InputNumber, Radio,message,
 Button, Upload, Icon,Input
 } from 'antd';
 import banner from '../../resource/img/a.jpg';
@@ -14,29 +14,56 @@ const { TextArea } = Input;
 
 class Index extends React.Component {
   state={
-    id:this.props.match.params.openid
+    id:this.props.match.params.openid,
+    submitStatus:false
   }
   handleSubmit = (e) => {
     e.preventDefault();
+    this.setState({
+      submitStatus:true
+    })
     this.props.form.validateFields((err, values) => {
       if (!err) {
+
         if(values.uploads){
           let datas=values.uploads.map((value)=>{
-              return value.response.filename
+              return {...value.response}
           })
           values.uploads=datas;
         }
-        axios.post("/front.php",params:{...values})
+        axios.post("/front.php",{id:this.state.id,...values})
         .then((res)=>{
-          console.log(res)
+          if(res.data==200){
+
+            message.success("提交成功!",()=>{
+              this.resetBtn();
+              this.toPerson();
+            })
+          }else{
+            message.error("异常!",()=>{
+              this.resetBtn();
+            })
+          }
         })
         .catch(e=>{
-          console.log(e)
-        })
-        console.log('Received values of form: ', values);
+          message.error(e,()=>{
 
+          })
+        })
       }
     });
+  }
+  checkPhone=(rule, value, callback) =>{
+        if(!(/^1(3|4|5|7|8)\d{9}$/.test(value))){
+            callback("手机号码有误，请重填");
+        }else{
+            callback();
+        }
+    };
+  resetBtn=()=>{
+    this.setState({
+      submitStatus:false
+    })
   }
   normFile = (e) => {
     if (Array.isArray(e)) {
@@ -62,7 +89,6 @@ class Index extends React.Component {
       onChange(info){
 
       },onRemove(file){
-
           axios.post("/index.php",JSON.stringify({
             filename:file.response.filename,
             action:"unlinkFile"
@@ -104,6 +130,19 @@ class Index extends React.Component {
             <Input placeholder="请填写标题" />
           )}
         </FormItem>
+        <FormItem {...formItemLayout} label="手机号">
+          {getFieldDecorator('phone', {
+            rules: [{
+              required: true,
+              typeL:"number",
+              message: '请填写手机号'
+            },{
+              validator: this.checkPhone,
+              }],
+          })(
+            <Input placeholder="请填写手机号" />
+          )}
+        </FormItem>
         <FormItem
           {...formItemLayout}
           label="填写爆料内容"
@@ -140,7 +179,7 @@ class Index extends React.Component {
         <FormItem
           wrapperCol={{ span: 12, offset: 6 }}
         >
-          <Button type="primary" htmlType="submit">提交</Button>
+          <Button type="primary" htmlType="submit" disabled={this.state.submitStatus}>提交</Button>
         </FormItem>
         <div style={styles.icons}>
 

@@ -1,0 +1,14 @@
+.upload-list-inline .ant-upload-list-item {
+  float: left;
+  width: 80%;
+  margin-right: 8px;
+}
+.upload-list-inline .ant-upload-animate-enter {
+  animation-name: uploadAnimateInlineIn;
+}
+.upload-list-inline .ant-upload-animate-leave {
+  animation-name: uploadAnimateInlineOut;
+}
+.ant-upload-list-item .anticon-cross{
+  opacity: 1 !important;
+}

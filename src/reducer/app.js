@@ -6,7 +6,7 @@ const initialLoginState={
 export  const appState=(state=initialLoginState,action)=>{
     switch (action.type) {
       case 'RECORD_USER':
-         return Object.assgin({},action.data);
+         return action.data;
       case "EMPTY_USER":
         return {
           userid:"",
