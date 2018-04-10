@@ -14,18 +14,16 @@ import isableToAccess  from './auth/front';
 import cookie  from 'react-cookies';
 import requireAuth from './auth/front';
 import {BrowserRouter as Router,Route,Switch,Redirect,IndexRoute} from 'react-router-dom';
-
-
-
 ReactDOM.render(
     <Provider store={store}>
         <Router >
           <Switch>
                <Route exact path="/index/:openid" component={props => requireAuth(FrontIndex, props,"IndexSign")}/>
                <Route exact path="/person/:id"  component={props => requireAuth(PersonCenter, props,"PersonSign")} />
-               <Route path="/msgdetails"  component={MsgDetails}/>
+               <Route  path="/msgdetails"  component={MsgDetails}/>
                <Route  path="/admin/login" component={Login}/>
-               <Route  path="/" component={getUserInfo}/>
+               <Route  path="/admin/index" component={AdminIndex}/>
+               <Route  path="/" component={props => requireAuth(FrontIndex, props,"newSign")}/>
                <Redirect to="/" />
            </Switch>
         </Router>

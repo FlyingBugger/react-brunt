@@ -1,7 +1,7 @@
 <?php
   $datas=$_GET;
 
-  $db=new PDO("mysql:host=localhost;dbname=weixin","root","root");
+  $db=new PDO("mysql:host=localhost;dbname=weixin","root","102098hchab");
   if(empty($datas)){
     //do getting getUserInfo
     try {

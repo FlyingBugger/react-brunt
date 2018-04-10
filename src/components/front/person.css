@@ -18,3 +18,7 @@
 .ant-list-item-action{
   margin-left: unset !important;
 }
+
+.ant-list-item-content{
+  justify-content:flex-start
+}

@@ -4,7 +4,10 @@ import axios from 'axios';
 export default (Layout, props,action) => {
     switch (action) {
       case "PersonCenter":
-
+        break;
+      case "newSign":
+        window.location.href="http://localhost/userinfo.php"
+        return false;
         break;
       case "IndexSign":
       let { match }=props;

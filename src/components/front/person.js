@@ -37,7 +37,15 @@ const fakeDataUrl = '/userinfo.php';
           params:{"id":this.state.id}
       })
       .then((res)=>{
-        callback(res);
+        if(!res.data[0].name){
+          message.warnning("你未曾提交过内容!");
+          this.setState({
+            loading:false
+          })
+        }else{
+          callback(res);
+        }
+
       })
       .catch(e=>{
         console.log(e)
@@ -91,14 +99,14 @@ const fakeDataUrl = '/userinfo.php';
         dataSource={data}
         renderItem={item => (
 
-          <List.Item actions={[<span style={item.status!==0?styles.red:styles.green}> {item.status!==0?"未被查看":"已被查看"}</span>,<a onClick={()=>this.toDetails(item)}>详情</a>]}>
+          <List.Item actions={[<span style={item.status!=0?styles.red:styles.green}> {item.status!=0?"未被查看":"已被查看"}</span>,<a onClick={()=>this.toDetails(item)}>详情</a>]}>
 
             <List.Item.Meta
               title={item.title}
               style={{textAlign:"center"}}
               description=""
             />
-            <div className="contents">{item.contents}</div>
+            <div className="contents">1{item.contents}</div>
           </List.Item>
         )}
       />
