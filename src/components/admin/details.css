@@ -1,0 +1,18 @@
+.title{
+    text-align: center;
+    font-size: 25px;
+}
+
+.content-tag{
+    display: flex;
+    justify-content: center;
+    margin: 10px;
+    font-size: 16px;
+}
+.content-tag div{
+  margin:5px;
+}
+
+.content-contents{
+    text-indent: 60px;
+}

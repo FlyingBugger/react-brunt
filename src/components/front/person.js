@@ -20,7 +20,6 @@ const fakeDataUrl = '/userinfo.php';
   }
   componentDidMount() {
     this.getData((res) => {
-
       this.setState({
         loading: false,
         data: res.data,
@@ -99,7 +98,7 @@ const fakeDataUrl = '/userinfo.php';
         dataSource={data}
         renderItem={item => (
 
-          <List.Item actions={[<span style={item.status!=0?styles.red:styles.green}> {item.status!=0?"未被查看":"已被查看"}</span>,<a onClick={()=>this.toDetails(item)}>详情</a>]}>
+          <List.Item actions={[<span style={item.status==0?styles.red:styles.green}> {item.status==0?"未被查看":"已被查看"}</span>,<a onClick={()=>this.toDetails(item)}>详情</a>]}>
 
             <List.Item.Meta
               title={item.title}

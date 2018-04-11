@@ -1,11 +1,10 @@
 import React from 'react';
-import { Layout,Table, Icon, Divider } from 'antd';
+import { Table } from 'antd';
 import axios from 'axios';
 import './main.css';
 
-
 let TotalDates=[];
-export default class TableComponents extends React.Component{
+ class TableComponents extends React.Component{
   constructor(props){
     super(props);
     this.state={
@@ -24,18 +23,18 @@ export default class TableComponents extends React.Component{
         title: '姓名',
         dataIndex: 'name',
         key: 'name',
-        render: text => <a href="#">{text}</a>,
+
       }, {
         title: '标题',
         dataIndex: 'title',
         key: 'title',
-        render:text=> <a href="#" className="ant-title">{text}</a>,
+
       },
       {
        title: '内容',
        dataIndex: 'contents',
        key: 'contents',
-       render: text => <a className="ant-cell" href="#">{text}</a>,
+       render: text => <span className="ant-cell" href="#">{text}</span>,
       }, {
         title: '是否包含媒体资源',
         dataIndex: 'uploads',
@@ -43,7 +42,7 @@ export default class TableComponents extends React.Component{
         render:(text,record)=>{
           return (
             <span>
-              <a href="#">{text==''?"no":"yes"}</a>
+              <a href="#">{text===''?"no":"yes"}</a>
             </span>
           )
         }
@@ -53,7 +52,7 @@ export default class TableComponents extends React.Component{
         key: 'status',
         render: (text, record) => (
           <span>
-            <a href="#">{text!=0?"yes":"no"}</a>
+            <a href="#">{text!==0?"yes":"no"}</a>
           </span>
         ),
       },{
@@ -69,19 +68,22 @@ export default class TableComponents extends React.Component{
     }
   }
 
+
   toDetails=(record)=>{
-    console.log(record)
+    this.props.handleGetArticle(record);
+
   }
 
   filterDates=(d)=>{
     var flag;
-    d==1?flag=0:flag=1;
+    d===1?flag=0:flag=1;
     this.setState({
-        dataSource:TotalDates.filter(v=>v.status==flag),
+        dataSource:TotalDates.filter(v=>v.status===flag),
     })
   }
 
   componentDidMount(){
+    const {datas,store}=this.props;
     this._fetchDate({action:"get"},(res)=>{
       TotalDates=res.data[0];
       this.setState({
@@ -98,7 +100,6 @@ export default class TableComponents extends React.Component{
     .catch(e=>{console.warn(e)})
   }
 
-  // <Table {...dates}  rowKey={record => record.id}/>
   render(){
     const  dates=this.state
     return(
@@ -109,3 +110,6 @@ export default class TableComponents extends React.Component{
 
   }
 }
+
+
+export default TableComponents;

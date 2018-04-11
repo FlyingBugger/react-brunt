@@ -449,3 +449,16 @@
 [0404/182206.224:ERROR:process_reader_win.cc(242)] ReadMemory at 0xd3b000 of 20480 bytes failed: 仅完成部分的 ReadProcessMemory 或 WriteProcessMemory 请求。 (0x12B)
 [0404/182206.224:ERROR:crash_report_exception_handler.cc(116)] WriteEverything failed
 [0404/182206.226:ERROR:scoped_process_suspend.cc(39)] NtResumeProcess: 已尝试访问正在退出的过程。  (0xc000010a)
+[0410/211542.446:ERROR:process_info.cc(118)] ReadProcessMemory bool __cdecl crashpad::`anonymous-namespace'::ReadStruct<struct crashpad::process_types::LDR_DATA_TABLE_ENTRY<struct crashpad::process_types::internal::Traits32>>(void *,unsigned __int64,struct crashpad::process_types::LDR_DATA_TABLE_ENTRY<struct crashpad::process_types::internal::Traits32> *): 仅完成部分的 ReadProcessMemory 或 WriteProcessMemory 请求。 (0x12B)
+[0410/211542.821:ERROR:process_info.cc(350)] VirtualQueryEx: 拒绝访问。 (0x5)
+[0410/211542.821:ERROR:process_info.cc(571)] ReadMemoryInfo failed
+[0410/211542.821:ERROR:process_reader_win.cc(242)] ReadMemory at 0x6b908c20 of 12 bytes failed: 仅完成部分的 ReadProcessMemory 或 WriteProcessMemory 请求。 (0x12B)
+[0410/211542.821:WARNING:process_snapshot_win.cc(72)] ReadMemory ExceptionInformation failed
+[0410/211542.821:WARNING:crash_report_exception_handler.cc(62)] ProcessSnapshotWin::Initialize failed
+[0410/211542.540:ERROR:process_reader_win.cc(123)] NtOpenThread: {无法访问} 过程已请求访问一对象，但未给访问权限。  (0xc0000022)
+[0410/211543.274:ERROR:exception_snapshot_win.cc(87)] thread ID 14628 not found in process
+[0410/211543.274:WARNING:crash_report_exception_handler.cc(62)] ProcessSnapshotWin::Initialize failed
+[0410/211542.852:ERROR:scoped_process_suspend.cc(39)] NtResumeProcess: 已尝试访问正在退出的过程。  (0xc000010a)
+[0410/211543.337:ERROR:process_reader_win.cc(123)] NtOpenThread: {无法访问} 过程已请求访问一对象，但未给访问权限。  (0xc0000022)
+[0410/211543.337:ERROR:exception_snapshot_win.cc(87)] thread ID 13320 not found in process
+[0410/211543.337:WARNING:crash_report_exception_handler.cc(62)] ProcessSnapshotWin::Initialize failed
