@@ -4,7 +4,7 @@ import axios from 'axios';
 import   './person.css';
 import { connect } from 'react-redux';
 import { recordUser } from "../../action/recordUser";
-const fakeDataUrl = '/userinfo.php';
+const fakeDataUrl = 'api/userinfo.php';
 
 
  class Person extends React.Component {

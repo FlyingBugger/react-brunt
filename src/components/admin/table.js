@@ -1,8 +1,8 @@
 import React from 'react';
-import { Table } from 'antd';
+import {Popconfirm, Table,Button } from 'antd';
 import axios from 'axios';
 import './main.css';
-
+import cookie from 'react-cookies';
 let TotalDates=[];
  class TableComponents extends React.Component{
   constructor(props){
@@ -42,7 +42,7 @@ let TotalDates=[];
         render:(text,record)=>{
           return (
             <span>
-              <a href="#">{text===''?"no":"yes"}</a>
+              <a href="javascript:void(0);">{text===''?"no":"yes"}</a>
             </span>
           )
         }
@@ -50,9 +50,12 @@ let TotalDates=[];
         title: '是否已被采纳',
         dataIndex: 'status',
         key: 'status',
-        render: (text, record) => (
-          <span>
-            <a href="#">{text!==0?"yes":"no"}</a>
+        render: (text,record,index) => (
+
+          <span >
+            <Popconfirm placement="topLeft" title={"确定采纳这条信息吗?"} onConfirm={()=>this.adpter(record.id,text,index)} okText="Yes" cancelText="No">
+             <Button style={text==0?{backgroundColor:"red",color:"white"}:{backgroundColor:"green",color:"white"}}>{text==0?"未被采纳":"已被采纳"}</Button>
+            </Popconfirm>
           </span>
         ),
       },{
@@ -60,7 +63,7 @@ let TotalDates=[];
        dataIndex: 'userid',
        width:200,
        key: 'userid',
-       render: (text,record) => <span onClick={()=>this.toDetails(record)}>查看详情</span>,
+       render: (text,record) => <span onClick={()=>this.toDetails(text,record)}>查看详情</span>,
       },
       ],
       loading:true,
@@ -68,21 +71,44 @@ let TotalDates=[];
     }
   }
 
+adpter=(id,text,index)=>{
 
-  toDetails=(record)=>{
+  if(text==0){
+    //未审核稿件
+    axios.post("../api/adminApi.php",{
+      action:"mark",
+      id
+    }).then((res)=>{
+      TotalDates.map((v)=>{
+        if(v.id==id){
+          v.status=1;
+        }
+      })
+      let tempDatas=this.state.dataSource
+      tempDatas[index]['status']=1
+      this.setState({
+          dataSource:tempDatas
+      })
+    }).catch(e=>{
+      console.log(e)
+    })
+  }
+}
+  toDetails=(text,record)=>{
     this.props.handleGetArticle(record);
 
   }
 
   filterDates=(d)=>{
     var flag;
-    d===1?flag=0:flag=1;
+    d==1?flag=0:flag=1;
     this.setState({
-        dataSource:TotalDates.filter(v=>v.status===flag),
+        dataSource:TotalDates.filter(v=>v.status==flag),
     })
   }
 
   componentDidMount(){
+
     const {datas,store}=this.props;
     this._fetchDate({action:"get"},(res)=>{
       TotalDates=res.data[0];
@@ -93,7 +119,7 @@ let TotalDates=[];
     })
   }
   _fetchDate=(dates,callback)=>{
-    axios.post("/adminApi.php",dates)
+    axios.post("../api/adminApi.php",dates)
     .then((res)=>{
       callback(res)
     })

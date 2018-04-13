@@ -3,31 +3,32 @@ import { Form, Icon, Input, Button,message } from 'antd';
 import axios from 'axios';
 import { connect } from 'react-redux';
 import { loginuser } from "../../action/action";
+import cookie from 'react-cookies';
 const FormItem = Form.Item;
 
 
 class Login extends Component {
 
   handleSubmit = (e) => {
-    const {login}=this.props.login
     e.preventDefault();
 
     this.props.form.validateFields((err, values) => {
       if (!err) {
           axios.post(
-            '/admin/assets/api/login.php',{
+            '../api/adminApi.php',{
+              action:"login",
               name:values.userName,
               password:values.password,
             })
             .then((res)=>{
-                if(res.data.flag===1){
+                if(res.data.flag===402){
                     this.props.form.setFields({
                       userName:{
                         value:values.userName,
                         errors:[new Error('用户名错误！')],
                       }
                     })
-                }else if (res.data.flag===2) {
+                }else if (res.data.flag===403) {
                   this.props.form.setFields({
                       password:{
                         value:values.password,
@@ -35,7 +36,9 @@ class Login extends Component {
                       }
                     })
                 }else{
-                    login();
+
+                    cookie.save("userToken",new Date().getTime());
+                    this.props.history.push("/admin/index")
                   message.info("登陆成功!");
                 }
             })

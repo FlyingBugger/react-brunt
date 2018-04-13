@@ -16,3 +16,11 @@
 .content-contents{
     text-indent: 60px;
 }
+.media img,video{
+  max-width: 480px;
+  margin:10px;
+}
+.mediaResouce{
+  text-indent: 27px;
+font-size: 30px;
+}

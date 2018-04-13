@@ -9,7 +9,6 @@ export default class menu extends React.Component{
     super(props);
   }
  handleClick = (e) => {
-
       this.props.handleChangeComponents(e.key);
   }
   render(){

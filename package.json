@@ -2,7 +2,7 @@
   "name": "init",
   "version": "0.1.0",
   "private": true,
-  "proxy": "http://localhost",
+    "homepage":"http://weixin.scnjnews.com/baoliao",
   "dependencies": {
     "antd": "^3.3.3",
     "axios": "^0.18.0",

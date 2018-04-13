@@ -16,7 +16,7 @@
       $res=$db->commit();
 
       if($res){
-        $redirectHref="http://localhost:3000/index/$openid";
+        $redirectHref="http://localhost/baoliao/index/$openid";
         header("Location:$redirectHref");
         exit();
       }

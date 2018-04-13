@@ -29,7 +29,7 @@ class Index extends React.Component {
     this.props.form.validateFields((err, values) => {
       if (!err) {
         values.uploads=this.state.uploads;
-        axios.post("/front.php",{id:this.state.userid,...values})
+        axios.post("api/front.php",{id:this.state.userid,...values})
         .then((res)=>{
           if(res.data===200){
             message.success("提交成功!",()=>{
@@ -103,7 +103,7 @@ class Index extends React.Component {
       name:'file',
       multiple:true,
       defaultFileList:[...fileList],
-      action:"/index.php",
+      action:"api/index.php",
       className: 'upload-list-inline',
       onChange(info){
 
@@ -117,7 +117,7 @@ class Index extends React.Component {
           mergeDates(target)
         }
       },onRemove(file){
-          axios.post("/index.php",JSON.stringify({
+          axios.post("../api/index.php",JSON.stringify({
             filename:file.relPath,
             action:"unlinkFile"
           }),{

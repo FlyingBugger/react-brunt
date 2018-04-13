@@ -6,12 +6,11 @@ export default (Layout, props,action) => {
       case "PersonCenter":
         break;
       case "newSign":
-        window.location.href="http://localhost/userinfo.php"
+        window.location.href="userinfo.php"
         return false;
-        break;
       case "IndexSign":
       let { match }=props;
-        axios.get("/userinfo.php",
+        axios.get("userinfo.php",
         {
           params:{
             "token":match.params.openid
@@ -20,7 +19,7 @@ export default (Layout, props,action) => {
       ).then((res)=>{
           if(res.data===0){
             //跳转到获取用户信息界面
-              window.location.href="http://localhost/userinfo.php"
+              window.location.href="userinfo.php"
           }else{
             cookie.save("token",match.params.openid);
           }
@@ -28,7 +27,18 @@ export default (Layout, props,action) => {
           console.log(e)
         })
         break;
-        case "PersonSign":
+        case "admin":
+        if(!cookie.load("userToken")){
+            props.history.push("/admin/login");
+        }
+          break;
+        case "login":
+
+        if(!cookie.load("userToken")){
+          return  <Layout {...props} />
+        }else{
+          props.history.push("/admin/index");
+        }
         //    cookie.save("token",match.params.openid);
           break;
 

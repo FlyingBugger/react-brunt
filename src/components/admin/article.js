@@ -9,7 +9,6 @@ export default class article extends  React.Component {
       this.state={
         data:props.dates
       }
-
     }
     componentDidMount(){
 
@@ -17,10 +16,37 @@ export default class article extends  React.Component {
     goBack=()=>{
       this.props.handleBack();
     }
+    medias(){
+      let n=[];
+      const medias=JSON.parse(this.state.data.uploads);
+      medias.map((v,index)=>{
+        //const path=`api/${v.thumbUrl}`;
+        const path=`http://localhost/${v.thumbUrl}`;
+        const name=v.name;
+        if(/\.(bmp|jpg|webp|png|tiff|gif)$/i.test(name)){
+          n.push(
+            <div key={index}>
+              <img src={path} />
+            </div>
+          )
+        }else if(/\.(mp4|avi|wma|3gp|flv|mpeg)$/i.test(name)){
+          n.push(
+            <div key={index}>
+              <video src={path} controls="controls">
+              </video>
+            </div>
+          )
+        }else{
+            <div key={index}>
+              <a href={path}>{name}</a>
+            </div>
+        }
+      })
+
+      return n;
+    }
   render(){
-      const dates=this.state.data;
-      const medias=JSON.parse(dates.uploads);
-      console.log(medias)
+    const dates=this.state.data;
     return(
       <div>
           <Button type="primary" onClick={this.goBack}>
@@ -34,10 +60,9 @@ export default class article extends  React.Component {
           <div className="content-contents">
               {dates.contents}
           </div>
-
-              <div>
-                媒体资源
-
+              <div className="media">
+                <div className="mediaResouce">媒体资源:</div>
+                {this.medias()}
               </div>
        </div>
     )

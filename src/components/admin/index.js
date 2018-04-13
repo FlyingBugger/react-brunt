@@ -1,8 +1,9 @@
 import React from 'react';
 import Menu from './menu';
-import { Layout,Table, Icon, Divider } from 'antd';
+import { Layout } from 'antd';
 import axios from 'axios';
 import MixedC from './mixedComponents';
+
 const { Header, Footer, Sider, Content } = Layout;
 
 export default class Index extends React.Component {
@@ -12,7 +13,6 @@ export default class Index extends React.Component {
   }
   ChangeComponents=(dates)=>{
     if(this.refs.props.refs.hasOwnProperty("props")){
-
       this.refs.props.refs.props.filterDates(dates);
     }else{
       this.refs.props.getToTable();

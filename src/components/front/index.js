@@ -29,8 +29,7 @@ class Index extends React.Component {
       "link":"http://weixin.scnjnews.com/foods/#/",
     }
 
-console.log(WxShare);
-
+    JSSDK(dates);
     //JSSDK(dates);
     //微信分享处
   }
@@ -48,7 +47,7 @@ console.log(WxShare);
           })
           values.uploads=datas;
         }
-        axios.post("/front.php",{id:this.state.id,...values})
+        axios.post("../api/front.php",{id:this.state.id,...values})
         .then((res)=>{
           if(res.data==200){
 
@@ -106,7 +105,7 @@ console.log(WxShare);
       onChange(info){
 
       },onRemove(file){
-          axios.post("/index.php",JSON.stringify({
+          axios.post("api/index.php",JSON.stringify({
             filename:file.response.filename,
             action:"unlinkFile"
           }),{
