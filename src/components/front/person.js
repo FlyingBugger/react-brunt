@@ -4,9 +4,9 @@ import axios from 'axios';
 import   './person.css';
 import { connect } from 'react-redux';
 import { recordUser } from "../../action/recordUser";
-const fakeDataUrl = 'api/userinfo.php';
+const fakeDataUrl = '/userinfo.php';
 
-
+let start=0;
  class Person extends React.Component {
   state = {
     id:this.props.match.params.id,
@@ -33,15 +33,21 @@ const fakeDataUrl = 'api/userinfo.php';
         });
     }
       axios.get(fakeDataUrl,{
-          params:{"id":this.state.id}
+          params:{"id":this.state.id,start}
       })
       .then((res)=>{
         if(!res.data[0].name){
-          message.warnning("你未曾提交过内容!");
+          message.warning("你未曾提交过内容!");
           this.setState({
             loading:false
           })
         }else{
+          if(res.data.length==5){
+            start+=5;
+            console.log(start)
+          }else{
+            start=-1;
+          }
           callback(res);
         }
 
@@ -51,11 +57,15 @@ const fakeDataUrl = 'api/userinfo.php';
       })
   }
   onLoadMore = () => {
+    if(start<0){
+      message.warning("没有更多信息了!");
+      return false;
+    }
     this.setState({
       loadingMore: true,
     });
     this.getData((res) => {
-      const data = this.state.data.concat(res.results);
+      const data = this.state.data.concat(res.data);
 
       this.setState({
         data,

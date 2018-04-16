@@ -12,7 +12,7 @@ import requireAuth from './auth/front';
 import {BrowserRouter as Router,Route,Switch,Redirect} from 'react-router-dom';
 ReactDOM.render(
     <Provider store={store}>
-        <Router basename="/baoliao">
+        <Router basename="/">
           <Switch>
                <Route exact path="/index/:openid" component={props => requireAuth(FrontIndex, props,"IndexSign")}/>
                <Route exact path="/person/:id"  component={props => requireAuth(PersonCenter, props,"PersonSign")} />

@@ -8,7 +8,7 @@ import banner from '../../resource/img/a.jpg';
 import axios from 'axios';
 import {Link} from 'react-router-dom';
 import WxShare from 'weixin-share';
-import JSSDK from './JSSDK';
+
 
 const FormItem = Form.Item;
 const Option = Select.Option;
@@ -21,18 +21,7 @@ class Index extends React.Component {
     submitStatus:false
   }
 
-  componentDidMount(){
-    let dates={
-      "title":"甜城味·内江美食地图",
-      "desc":"内江史上最全的美食地图,没有之一!",
-      "image":"http://weixin.scnjnews.com/foods/share.png",
-      "link":"http://weixin.scnjnews.com/foods/#/",
-    }
 
-    JSSDK(dates);
-    //JSSDK(dates);
-    //微信分享处
-  }
   handleSubmit = (e) => {
     e.preventDefault();
     this.setState({
