@@ -19,7 +19,7 @@ export default (Layout, props,action) => {
       ).then((res)=>{
           if(res.data===0){
             //跳转到获取用户信息界面
-              window.location.href="userinfo.php"
+              window.location.href="api/userinfo.php"
           }else{
             cookie.save("token",match.params.openid);
           }

@@ -4,9 +4,10 @@ import axios from 'axios';
 import   './person.css';
 import { connect } from 'react-redux';
 import { recordUser } from "../../action/recordUser";
-const fakeDataUrl = 'api/userinfo.php';
+import JSSDK from './JSSDK';
+const fakeDataUrl = '../api/userinfo.php';
 
-
+let startId=0;
  class Person extends React.Component {
   state = {
     id:this.props.match.params.id,
@@ -16,7 +17,15 @@ const fakeDataUrl = 'api/userinfo.php';
     data: [],
   }
   componentWillMount(){
-    document.title="个人中心"
+    document.title="个人中心";
+    let dates={
+      "title":"个人主页",
+      "desc":"内江日报在线爆料平台",
+      "imgUrl":"http://weixin.scnjnews.com/foods/share.png",
+      "link":"http://weixin.scnjnews.com/baoliao/index",
+    }
+    JSSDK(dates);
+
   }
   componentDidMount() {
     this.getData((res) => {
@@ -36,8 +45,8 @@ const fakeDataUrl = 'api/userinfo.php';
           params:{"id":this.state.id}
       })
       .then((res)=>{
-        if(!res.data[0].name){
-          message.warnning("你未曾提交过内容!");
+        if(res.data.length==0){
+          message.warning("你未曾提交过内容!");
           this.setState({
             loading:false
           })

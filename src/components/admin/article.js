@@ -21,7 +21,8 @@ export default class article extends  React.Component {
       const medias=JSON.parse(this.state.data.uploads);
       medias.map((v,index)=>{
         //const path=`api/${v.thumbUrl}`;
-        const path=`http://localhost/${v.thumbUrl}`;
+        const path=`../api/${v.thumbUrl}`;
+        console.log(path);
         const name=v.name;
         if(/\.(bmp|jpg|webp|png|tiff|gif)$/i.test(name)){
           n.push(

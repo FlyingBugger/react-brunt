@@ -16,8 +16,8 @@
       $res=$db->commit();
 
       if($res){
-        $redirectHref="http://localhost/baoliao/index/$openid";
-        header("Location:$redirectHref");
+    //    $redirectHref="http://localhost:3000/baoliao/index/$openid";
+    //    header("Location:$redirectHref");
         exit();
       }
     } catch (PDOException $e) {

@@ -25,10 +25,9 @@ class Index extends React.Component {
     let dates={
       "title":"甜城味·内江美食地图",
       "desc":"内江史上最全的美食地图,没有之一!",
-      "image":"http://weixin.scnjnews.com/foods/share.png",
       "link":"http://weixin.scnjnews.com/foods/#/",
+      "imgUrl":"http://weixin.scnjnews.com/foods/share.png",
     }
-
     JSSDK(dates);
     //JSSDK(dates);
     //微信分享处
@@ -101,11 +100,11 @@ class Index extends React.Component {
       accept:"image/*,video/*,audio/*",
       name:'file',
       multiple:true,
-      action:"/index.php",
+      action:"../api/index.php",
       onChange(info){
 
       },onRemove(file){
-          axios.post("api/index.php",JSON.stringify({
+          axios.post("../api/index.php",JSON.stringify({
             filename:file.response.filename,
             action:"unlinkFile"
           }),{
