@@ -18,7 +18,9 @@
 }
 .media img,video{
   max-width: 480px;
-  margin:10px;
+    margin: 10px;
+    float: left;
+    max-height: 250px;
 }
 .mediaResouce{
   text-indent: 27px;

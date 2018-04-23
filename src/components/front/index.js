@@ -46,10 +46,21 @@ class Index extends React.Component {
           })
           values.uploads=datas;
         }
+
+        if(!(/^1(3|4|5|7|8)\d{9}$/.test(values.phone))){
+              this.props.form.setFields({
+                phone:{
+                  value:"",
+                    errors: [new Error('请输入正确的手机号码')]
+                }
+              })
+              this.resetBtn();
+              return false;
+          }
+
         axios.post("../api/front.php",{id:this.state.id,...values})
         .then((res)=>{
           if(res.data==200){
-
             message.success("提交成功!",()=>{
               this.resetBtn();
               this.toPerson();
@@ -65,16 +76,12 @@ class Index extends React.Component {
 
           })
         })
+      }else{
+        this.resetBtn();
       }
     });
   }
-  checkPhone=(rule, value, callback) =>{
-        if(!(/^1(3|4|5|7|8)\d{9}$/.test(value))){
-            callback("手机号码有误，请重填");
-        }else{
-            callback();
-        }
-    };
+
   resetBtn=()=>{
     this.setState({
       submitStatus:false
@@ -151,9 +158,7 @@ class Index extends React.Component {
               required: true,
               typeL:"number",
               message: '请填写手机号'
-            },{
-              validator: this.checkPhone,
-              }],
+            }],
           })(
             <Input placeholder="请填写手机号" />
           )}

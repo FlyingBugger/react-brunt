@@ -16,10 +16,6 @@ const fakeDataUrl = '../api/userinfo.php';
     showLoadingMore: true,
     data: [],
   }
-  componentDidMount(){
-    
-
-  }
   componentDidMount() {
     this.getData((res) => {
       this.setState({
@@ -31,7 +27,7 @@ const fakeDataUrl = '../api/userinfo.php';
 
     getData = (callback) => {
 
-     if(isNaN(parseInt(this.state.id))){
+     if(typeof this.state.id == 'number'){
           message.error("id错误!",()=>{
           this.props.history.push("/")
           });
@@ -49,7 +45,6 @@ const fakeDataUrl = '../api/userinfo.php';
           }else{
             if(res.data.length==5){
               start+=5;
-              console.log(start)
             }else{
               start=-1;
             }

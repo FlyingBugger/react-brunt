@@ -117,7 +117,7 @@ class Index extends React.Component {
           mergeDates(target)
         }
       },onRemove(file){
-          axios.post("../api/index.php",JSON.stringify({
+          axios.post("api/index.php",JSON.stringify({
             filename:file.relPath,
             action:"unlinkFile"
           }),{
