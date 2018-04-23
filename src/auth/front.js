@@ -6,7 +6,7 @@ export default (Layout, props,action) => {
       case "PersonCenter":
         break;
       case "newSign":
-        window.location.href="userinfo.php"
+        window.location.href="http://localhost/userinfo.php"
         return false;
       case "IndexSign":
       let { match }=props;
@@ -19,7 +19,7 @@ export default (Layout, props,action) => {
       ).then((res)=>{
           if(res.data===0){
             //跳转到获取用户信息界面
-              window.location.href="userinfo.php"
+              window.location.href="http://localhost/userinfo.php"
           }else{
             cookie.save("token",match.params.openid);
           }

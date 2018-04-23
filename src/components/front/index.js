@@ -8,7 +8,7 @@ import banner from '../../resource/img/a.jpg';
 import axios from 'axios';
 import {Link} from 'react-router-dom';
 import WxShare from 'weixin-share';
-
+import Jssdk from './JSSDK'
 
 const FormItem = Form.Item;
 const Option = Select.Option;
@@ -21,6 +21,10 @@ class Index extends React.Component {
     submitStatus:false
   }
 
+    componentDidMount(){
+        console.log(123)
+    Jssdk();
+  }
 
   handleSubmit = (e) => {
     e.preventDefault();

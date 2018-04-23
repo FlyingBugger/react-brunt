@@ -4,6 +4,8 @@ import axios from 'axios';
 import   './person.css';
 import { connect } from 'react-redux';
 import { recordUser } from "../../action/recordUser";
+import Jssdk from './JSSDK'
+
 const fakeDataUrl = '/userinfo.php';
 
 let start=0;
@@ -15,7 +17,14 @@ let start=0;
     showLoadingMore: true,
     data: [],
   }
+
+  componentDidMount(){
+    console.log(1)
+    Jssdk();
+  }
+
   componentWillMount(){
+      console.log(2)
     document.title="个人中心"
   }
   componentDidMount() {
@@ -25,6 +34,7 @@ let start=0;
         data: res.data,
       });
     });
+
   }
   getData = (callback) => {
       if(isNaN(parseInt(this.state.id))){
@@ -89,6 +99,7 @@ let start=0;
     console.log(1)
   }
   render() {
+     console.log(1)
     const { loading, loadingMore, showLoadingMore, data } = this.state;
 
     const loadMore = showLoadingMore ? (

@@ -1,8 +1,9 @@
 import React from 'react';
 import axios from 'axios';
-
+import WxShare from 'weixin-share';
 export default (dates)=>{
-
+        console.log(123);
+        return false;
           let titleA=dates.title;
          let decA=dates.desc;
          let sharelinkAimgA=dates.image;

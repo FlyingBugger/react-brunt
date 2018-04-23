@@ -1,4 +1,5 @@
 <?php
+echo 1;
   $datas=$_GET;
   $db=new PDO("mysql:host=192.168.20.104;dbname=weixin","root","102098hchab");
 
@@ -15,7 +16,7 @@
       $q=$db->exec($sql);
       $res=$db->commit();
       if($res){
-		$redirectHref="http://weixin.scnjnews.com/baoliao/index/$openid";
+		$redirectHref="localhost:3000/$openid";
         header("Location:$redirectHref");
         exit();
       }
