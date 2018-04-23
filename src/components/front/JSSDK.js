@@ -11,7 +11,7 @@ export default (dates)=>{
              return false;
            }
            new WxShare().config({
-             debug: false,
+             debug: true,
              appId: infos['appId'],
              timestamp: infos['timestamp'],
              nonceStr: infos['nonceStr'],

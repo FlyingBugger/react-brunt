@@ -7,7 +7,7 @@ import { recordUser } from "../../action/recordUser";
 import JSSDK from './JSSDK';
 const fakeDataUrl = '../api/userinfo.php';
 
-let startId=0;
+  let start=0
  class Person extends React.Component {
   state = {
     id:this.props.match.params.id,
@@ -16,7 +16,7 @@ let startId=0;
     showLoadingMore: true,
     data: [],
   }
-  componentWillMount(){
+  componentDidMount(){
     document.title="个人中心";
     let dates={
       "title":"个人主页",
@@ -35,45 +35,58 @@ let startId=0;
       });
     });
   }
-  getData = (callback) => {
-      if(isNaN(parseInt(this.state.id))){
-        message.error("id错误!",()=>{
-        this.props.history.push("/")
-        });
+
+    getData = (callback) => {
+
+     if(isNaN(parseInt(this.state.id))){
+          message.error("id错误!",()=>{
+          this.props.history.push("/")
+          });
+      }
+        axios.get(fakeDataUrl,{
+            params:{"id":this.state.id,start}
+        })
+        .then((res)=>{
+          if(!res.data[0].name){
+            message.warning("你未曾提交过内容!");
+            start=-1;
+            this.setState({
+              loading:false
+            })
+          }else{
+            if(res.data.length==5){
+              start+=5;
+              console.log(start)
+            }else{
+              start=-1;
+            }
+            callback(res);
+          }
+
+        })
+        .catch(e=>{
+          console.log(e)
+        })
     }
-      axios.get(fakeDataUrl,{
-          params:{"id":this.state.id}
-      })
-      .then((res)=>{
-        if(res.data.length==0){
-          message.warning("你未曾提交过内容!");
-          this.setState({
-            loading:false
-          })
-        }else{
-          callback(res);
-        }
-
-      })
-      .catch(e=>{
-        console.log(e)
-      })
-  }
-  onLoadMore = () => {
-    this.setState({
-      loadingMore: true,
-    });
-    this.getData((res) => {
-      const data = this.state.data.concat(res.results);
-
+    onLoadMore = () => {
+      if(start<0){
+        message.warning("没有更多信息了!");
+        return false;
+      }
       this.setState({
-        data,
-        loadingMore: false,
-      }, () => {
-        window.dispatchEvent(new Event('resize'));
+        loadingMore: true,
       });
-    });
-  }
+      this.getData((res) => {
+        const data = this.state.data.concat(res.data);
+
+        this.setState({
+          data,
+          loadingMore: false,
+        }, () => {
+          window.dispatchEvent(new Event('resize'));
+        });
+      });
+    }
   toDetails(item){
 
     const datas={
