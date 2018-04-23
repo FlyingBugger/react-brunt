@@ -5,13 +5,13 @@ export default (dates)=>{
 
          const href=window.location.href;
          axios.post("../api/frontapi.php",{"act":"JSSDK",href}).then(res=>{
-           console.log(res)
+
          let infos= res.data.signPackage;
            if(!infos){
              return false;
            }
            new WxShare().config({
-             debug: true,
+             debug: false,
              appId: infos['appId'],
              timestamp: infos['timestamp'],
              nonceStr: infos['nonceStr'],

@@ -17,14 +17,7 @@ const fakeDataUrl = '../api/userinfo.php';
     data: [],
   }
   componentDidMount(){
-    document.title="个人中心";
-    let dates={
-      "title":"个人主页",
-      "desc":"内江日报在线爆料平台",
-      "imgUrl":"http://weixin.scnjnews.com/foods/share.png",
-      "link":"http://weixin.scnjnews.com/baoliao/index",
-    }
-    JSSDK(dates);
+    
 
   }
   componentDidMount() {
@@ -101,6 +94,15 @@ const fakeDataUrl = '../api/userinfo.php';
     console.log(1)
   }
   render() {
+    document.title="个人中心";
+    let dates={
+      "title":"个人主页",
+      "desc":"内江日报在线爆料平台",
+      "imgUrl":"http://weixin.scnjnews.com/foods/share.png",
+      "link":"http://weixin.scnjnews.com/baoliao/index",
+    }
+    JSSDK(dates);
+    
     const { loading, loadingMore, showLoadingMore, data } = this.state;
 
     const loadMore = showLoadingMore ? (
