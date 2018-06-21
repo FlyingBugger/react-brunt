@@ -15,7 +15,7 @@ class Login extends Component {
     this.props.form.validateFields((err, values) => {
       if (!err) {
           axios.post(
-            '../api/adminApi.php',{
+            'api/adminApi.php',{
               action:"login",
               name:values.userName,
               password:values.password,

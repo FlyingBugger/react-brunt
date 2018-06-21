@@ -97,7 +97,7 @@ const fakeDataUrl = '../api/userinfo.php';
       "link":"http://weixin.scnjnews.com/baoliao/index",
     }
     JSSDK(dates);
-    
+
     const { loading, loadingMore, showLoadingMore, data } = this.state;
 
     const loadMore = showLoadingMore ? (

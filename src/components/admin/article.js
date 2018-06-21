@@ -22,7 +22,7 @@ export default class article extends  React.Component {
       medias.map((v,index)=>{
         //const path=`api/${v.thumbUrl}`;
         const path=`../api/${v.thumbUrl}`;
-        console.log(path);
+
         const name=v.name;
         if(/\.(bmp|jpg|webp|png|tiff|gif)$/i.test(name)){
           n.push(

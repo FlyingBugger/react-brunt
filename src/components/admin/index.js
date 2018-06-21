@@ -3,13 +3,19 @@ import Menu from './menu';
 import { Layout } from 'antd';
 import axios from 'axios';
 import MixedC from './mixedComponents';
+import cookie from 'react-cookies';
 
 const { Header, Footer, Sider, Content } = Layout;
 
 export default class Index extends React.Component {
   constructor(props){
     super(props);
-
+  }
+  componentWillMount(){
+   const    token=cookie.load("userToken") || null;
+    if(!token){
+      this.props.history.push("/admin/login")
+    }
   }
   ChangeComponents=(dates)=>{
     if(this.refs.props.refs.hasOwnProperty("props")){

@@ -8,7 +8,7 @@ import banner from '../../resource/img/a.jpg';
 import axios from 'axios';
 import {Link} from 'react-router-dom';
 import WxShare from 'weixin-share';
-import JSSDK from './JSSDK';
+
 
 const FormItem = Form.Item;
 const Option = Select.Option;
@@ -22,14 +22,7 @@ class Index extends React.Component {
   }
 
   componentDidMount(){
-    let dates={
-      "title":"甜城味·内江美食地图",
-      "desc":"内江史上最全的美食地图,没有之一!",
-      "link":"http://weixin.scnjnews.com/foods/#/",
-      "imgUrl":"http://weixin.scnjnews.com/foods/share.png",
-    }
-    JSSDK(dates);
-    //JSSDK(dates);
+
     //微信分享处
   }
   handleSubmit = (e) => {
@@ -47,23 +40,36 @@ class Index extends React.Component {
           values.uploads=datas;
         }
 
-        if(!(/^1(3|4|5|7|8)\d{9}$/.test(values.phone))){
-              this.props.form.setFields({
-                phone:{
-                  value:"",
-                    errors: [new Error('请输入正确的手机号码')]
-                }
-              })
-              this.resetBtn();
-              return false;
-          }
+        if(values.title.length>=8){
 
-        axios.post("../api/front.php",{id:this.state.id,...values})
+          this.props.form.setFields({
+            title:{
+              value:values.title,
+                errors: [new Error('标题不能超过8个字符')]
+            }
+          })
+          this.resetBtn();
+          return false;
+        }
+        if (values.phone) {
+          if(!(/^1(3|4|5|7|8)\d{9}$/.test(values.phone))){
+                this.props.form.setFields({
+                  phone:{
+                    value:"",
+                      errors: [new Error('请输入正确的手机号码')]
+                  }
+                })
+                this.resetBtn();
+                return false;
+            }
+        }
+
+        axios.post("api/front.php",{id:this.state.id,...values})
         .then((res)=>{
-          if(res.data==200){
+          if(res.data>0){
             message.success("提交成功!",()=>{
               this.resetBtn();
-              this.toPerson();
+              this.props.history.push("/list");
             })
           }else{
             message.error("异常!",()=>{
@@ -72,9 +78,7 @@ class Index extends React.Component {
           }
         })
         .catch(e=>{
-          message.error(e,()=>{
-
-          })
+            console.log(e);
         })
       }else{
         this.resetBtn();
@@ -93,9 +97,6 @@ class Index extends React.Component {
     }
     return e && e.fileList;
   }
-  toPerson(){
-    this.props.history.push("/person/"+this.state.id);
-  }
 
   render() {
     const { getFieldDecorator } = this.props.form;
@@ -107,11 +108,11 @@ class Index extends React.Component {
       accept:"image/*,video/*,audio/*",
       name:'file',
       multiple:true,
-      action:"../api/index.php",
+      action:"api/index.php",
       onChange(info){
 
       },onRemove(file){
-          axios.post("../api/index.php",JSON.stringify({
+          axios.post("/api/index.php",JSON.stringify({
             filename:file.response.filename,
             action:"unlinkFile"
           }),{
@@ -128,14 +129,14 @@ class Index extends React.Component {
     return (
       <Form onSubmit={this.handleSubmit} style={styles.mid}>
       <div  className="ant-row  ant-form-item">
-           <div  style={{margin:"0 auto",float:"unset"}} className="ant-col-16 ant-form-item-control-wrapper">
+           <div  style={{margin:"0 auto",maxWidth:"800px",float:"unset"}} className="ant-col-16 ant-form-item-control-wrapper">
               <img src={banner} style={{width:"100%"}}/>
            </div>
       </div>
         <FormItem {...formItemLayout} label="姓名">
           {getFieldDecorator('username', {
             rules: [{
-              required: true,
+
               message: '请输入姓名',
             }],
           })(
@@ -155,7 +156,7 @@ class Index extends React.Component {
         <FormItem {...formItemLayout} label="手机号">
           {getFieldDecorator('phone', {
             rules: [{
-              required: true,
+
               typeL:"number",
               message: '请填写手机号'
             }],
@@ -197,15 +198,12 @@ class Index extends React.Component {
           </div>
         </FormItem>
         <FormItem
+        style={{margin:"0 auto"}}
           wrapperCol={{ span: 12, offset: 6 }}
         >
-          <Button type="primary" htmlType="submit" disabled={this.state.submitStatus}>提交</Button>
+          <Button  type="primary" htmlType="submit" disabled={this.state.submitStatus}>提交</Button>
         </FormItem>
-        <div style={styles.icons}>
 
-         <Icon type="user" style={{fontSize:30,display:"block"}} onClick={()=>this.toPerson()}/>
-         个人中心
-         </div>
       </Form>
     );
   }

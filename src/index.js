@@ -7,20 +7,19 @@ import Login from './components/admin/login';
 import AdminIndex from './components/admin/';
 import FrontIndex  from './components/front/index';
 import MsgDetails  from './components/front/details';
-import PersonCenter from './components/front/person';
-import requireAuth from './auth/front';
+import ListAll  from './components/front/list';
+import ListDetails  from './components/front/listDetails';
 import {BrowserRouter as Router,Route,Switch,Redirect} from 'react-router-dom';
 ReactDOM.render(
     <Provider store={store}>
-        <Router basename="/baoliao">
+        <Router basename="/jbpt">
           <Switch>
-               <Route exact path="/index/:openid" component={props => requireAuth(FrontIndex, props,"IndexSign")}/>
-               <Route exact path="/person/:id"  component={props => requireAuth(PersonCenter, props,"PersonSign")} />
-               <Route  path="/msgdetails"  component={MsgDetails}/>
-               <Route  path="/admin/login" component={props => requireAuth(Login, props,"login")}/>
-               <Route  path="/admin/index" component={props => requireAuth(AdminIndex, props,"admin")}/>
-               <Route  path="/" component={props => requireAuth(FrontIndex, props,"newSign")}/>
-               <Redirect to="/" />
+               <Route exact path="/index" component={FrontIndex}/>
+               <Route  path="/admin/login" component={Login}/>
+               <Route  path="/list" component={ListAll}/>
+               <Route  path="/listDetails" component={ListDetails}/>
+               <Route  path="/admin/index" component={AdminIndex}/>
+                <Route  path="*" component={FrontIndex}/>
            </Switch>
         </Router>
       </Provider>

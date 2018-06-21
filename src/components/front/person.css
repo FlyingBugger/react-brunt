@@ -22,3 +22,16 @@
 .ant-list-item-content{
   justify-content:flex-start
 }
+
+.content{
+    text-indent: 20px;
+}
+.medias{
+  max-width: 80%;
+    margin: 5px auto;
+    display: block;
+}
+video{
+  float:unset !important;
+  display: block;
+}

@@ -75,7 +75,7 @@ adpter=(id,text,index)=>{
 
   if(text==0){
     //未审核稿件
-    axios.post("../api/adminApi.php",{
+    axios.post("api/adminApi.php",{
       action:"mark",
       id
     }).then((res)=>{
@@ -119,7 +119,7 @@ adpter=(id,text,index)=>{
     })
   }
   _fetchDate=(dates,callback)=>{
-    axios.post("../api/adminApi.php",dates)
+    axios.post("api/adminApi.php",dates)
     .then((res)=>{
       callback(res)
     })
